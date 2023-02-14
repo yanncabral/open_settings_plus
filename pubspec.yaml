@@ -1,7 +1,7 @@
 name: open_settings_plus
 description: The most complete flutter plugin packages for open various settings screen, covering newer versions of ios and android.
 version: 0.0.1
-homepage: http://github.com/yanncabral/open_settings_plus
+homepage: https://github.com/yanncabral/open_settings_plus
 
 environment:
   sdk: ">=2.19.0 <3.0.0"
