@@ -1,4 +1,4 @@
-### 0.0.2
+## 0.0.2
 
 * Add better documentations for android implementation.
 * Add better documentations for iOS implementation.
