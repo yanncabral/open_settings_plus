@@ -17,6 +17,7 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
     );
   }
 
+  /// Open Android settings in `NFC` section.
   Future<bool> nfc() {
     return sendCustomMessage(
       'android.settings.NFC_SETTINGS',
