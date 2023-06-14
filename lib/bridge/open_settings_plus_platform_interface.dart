@@ -1,7 +1,8 @@
+import 'package:open_settings_plus/bridge/open_settings_plus_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'open_settings_plus_method_channel.dart';
-
+/// The interface that implementations of open_settings_plus must implement.
+/// You can use this interface to send custom message to native side.
 abstract class OpenSettingsPlusPlatform extends PlatformInterface {
   /// Constructs a OpenSettingsPlusPlatform.
   OpenSettingsPlusPlatform() : super(token: _token);

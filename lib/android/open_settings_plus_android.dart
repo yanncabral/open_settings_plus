@@ -1,6 +1,12 @@
 import 'package:open_settings_plus/open_settings_plus.dart';
 
+/// {@template open_settings_plus_android}
+/// An implementation of `OpenSettingsPlusPlatform` that uses method channels.
+/// This class is used by the app itself to open settings.
+/// You need to use this class to open android options
+/// {@endtemplate}
 class OpenSettingsPlusAndroid extends OpenSettingsPlus {
+  /// {@macro open_settings_plus_android}
   const OpenSettingsPlusAndroid();
 
   /// Open Android settings in `Wi-Fi` section.

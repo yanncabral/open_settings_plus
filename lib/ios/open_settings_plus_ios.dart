@@ -1,6 +1,12 @@
 import 'package:open_settings_plus/open_settings_plus.dart';
 
+/// {@macro open_settings_plus}
+/// The iOS implementation of `OpenSettingsPlusPlatform`. You
+/// can use this class to open settings in iOS.
+/// Note: This class should only be used in iOS.
+/// {@endtemplate}
 class OpenSettingsPlusIOS extends OpenSettingsPlus {
+  /// {@macro open_settings_plus}
   const OpenSettingsPlusIOS();
 
   /// Open iOS settings in `Wi-Fi` section.
