@@ -1,3 +1,7 @@
+## 0.1.0
+* Add a stricter code analysis
+* Add NFC option to android.
+
 ## 0.0.2
 
 * Add better documentations for android implementation.
