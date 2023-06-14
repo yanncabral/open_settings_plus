@@ -11,6 +11,12 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
     );
   }
 
+  Future<bool> nfc() {
+    return sendCustomMessage(
+      'android.settings.NFC_SETTINGS',
+    );
+  }
+
   /// Open Android settings in `Data & Roaming` section.
   /// returns operation successful or failure.
   Future<bool> dataRoaming() {
