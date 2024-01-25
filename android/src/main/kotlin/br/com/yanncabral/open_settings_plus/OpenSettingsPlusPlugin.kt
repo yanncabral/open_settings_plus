@@ -1,8 +1,9 @@
 package br.com.yanncabral.open_settings_plus
 
 import androidx.annotation.NonNull
-import android.content.Context;
-import android.content.Intent;
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
@@ -25,11 +26,19 @@ class OpenSettingsPlusPlugin: FlutterPlugin, MethodCallHandler {
     mContext = flutterPluginBinding.getApplicationContext();
   }
 
-  fun handleJumpToSettings(target: String) {
+  private fun openSettings(target: String) {
     val intent = Intent(target)
-
     if (intent.action != null) {
       intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      mContext.startActivity(intent)
+    }
+  }
+
+  private fun openSettingsWithPackage(target: String) {
+    val intent = Intent(target)
+    if (intent.action != null) {
+      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      intent.data = Uri.fromParts("package", mContext.packageName, null)
       mContext.startActivity(intent)
     }
   }
@@ -37,9 +46,11 @@ class OpenSettingsPlusPlugin: FlutterPlugin, MethodCallHandler {
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     if (call.method == "openSettings") {
       val settingToOpen = call.argument<String>("settingToOpen")
-      
       if (settingToOpen != null) {
-        handleJumpToSettings(settingToOpen)
+        when (settingToOpen) {
+          "android.settings.APPLICATION_DETAILS_SETTINGS" -> openSettingsWithPackage(settingToOpen)
+          else -> openSettings(settingToOpen)
+        }
         result.success(true)
       }
     } else {
