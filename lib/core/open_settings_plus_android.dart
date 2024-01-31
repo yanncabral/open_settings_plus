@@ -1,4 +1,4 @@
-import 'package:open_settings_plus/open_settings_plus.dart';
+part of 'open_settings_plus.dart';
 
 /// {@template open_settings_plus_android}
 /// An implementation of `OpenSettingsPlusPlatform` that uses method channels.

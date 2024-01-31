@@ -2,6 +2,35 @@
 
 A comprehensive Flutter plugin to seamlessly navigate to various settings screens on both iOS and Android devices, ensuring compatibility with the latest versions of both platforms.
 
+## 🚀 Usage
+
+To integrate `open_settings_plus` into your project, add it as a dependency in your `pubspec.yaml` file.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:open_settings_plus/open_settings_plus.dart';
+
+void main() => runApp(MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              switch (OpenSettingsPlus.shared) {
+                OpenSettingsPlusAndroid settings => settings.wifi(),
+                OpenSettingsPlusIOS settings => settings.wifi(),
+                _ => throw Exception('Platform not supported'),
+              }
+            },
+            child: Text('Wi-Fi Settings'),
+          ),
+        ),
+      ),
+    )
+  );
+```
+
+For more examples and use-cases, refer to the `example` directory.
+
 ## 🌟 Features
 
 ### Android:
@@ -83,40 +112,6 @@ Navigate directly to:
 - Sounds & Haptics
 ... and more features being added regularly!
 
-## 🚀 Usage
-
-To integrate `open_settings_plus` into your project, add it as a dependency in your `pubspec.yaml` file.
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:open_settings_plus/open_settings_plus.dart';
-
-const settingsiOS = OpenSettingsPlusIOS();
-const settingsAndroid = OpenSettingsPlusAndroid();
-
-void main() => runApp(MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: ElevatedButton(
-            onPressed: () {
-                 if (Platform.isAndroid) {
-                    return settingsAndroid.wifi();
-                } else if (Platform.isIOS) {
-                    return settingsiOS.wifi();
-                } else {
-                    throw Exception('Platform not supported');
-                }
-
-              },
-            child: Text('Wi-Fi Settings'),
-          ),
-        ),
-      ),
-    ));
-```
-
-For more examples and use-cases, refer to the `example` directory.
-
 ## 🙏 Acknowledgments
 
 This package was innovatively crafted by [Yann Cabral](https://github.com/yanncabral). It was inspired by the fantastic work of [Ali Hoseinpoor](https://github.com/AliHoseinpoor/open_settings), aiming to overcome certain limitations.
@@ -131,3 +126,4 @@ Encountered an issue or have a feature in mind? We'd love to hear from you!
 ---
 
 This revised README provides a more structured and polished presentation of the plugin's features and usage.
+

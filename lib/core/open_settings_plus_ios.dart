@@ -1,4 +1,4 @@
-import 'package:open_settings_plus/open_settings_plus.dart';
+part of 'open_settings_plus.dart';
 
 /// {@template open_settings_plus_ios}
 /// The iOS implementation of `OpenSettingsPlusPlatform`. You
@@ -8,6 +8,10 @@ import 'package:open_settings_plus/open_settings_plus.dart';
 class OpenSettingsPlusIOS extends OpenSettingsPlus {
   /// {@macro open_settings_plus_ios}
   const OpenSettingsPlusIOS();
+
+  /// Open iOS settings.
+  /// returns operation successful or failure.
+  Future<bool> call() => settings();
 
   /// Open iOS settings in `Wi-Fi` section.
   /// returns operation successful or failure.
