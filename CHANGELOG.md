@@ -1,3 +1,6 @@
+## 0.3.1
+* Fix health settings for ios.
+
 ## 0.3.0
 * Add wallpaper option to ios.
 
