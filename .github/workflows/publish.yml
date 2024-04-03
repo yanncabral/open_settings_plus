@@ -9,15 +9,31 @@ on:
 
 jobs:
   publish:
+    strategy:
+        matrix:
+          flutter-version:
+            - "2.5.0"
+            - "any"
     permissions:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
-      - name: Install dependencies
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.flutter-version }}
+
+      - name: 📦 Install Dependencies
         run: flutter pub get
-      # Here you can insert custom steps you need
-      # - run: dart tool/generate-code.dart
-      - name: Publish
+      
+      - name: ✨ Check Formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: 🕵️ Analyze
+        run: dart analyze --fatal-infos --fatal-warnings .
+
+      - name: 🚀 Publish
         run: dart pub publish --force
