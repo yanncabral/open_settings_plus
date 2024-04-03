@@ -12,7 +12,7 @@ jobs:
     strategy:
         matrix:
           flutter-version:
-            - "2.5.0"
+            - "2.19.0"
             - "any"
     permissions:
       id-token: write
