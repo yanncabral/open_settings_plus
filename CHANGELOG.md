@@ -1,3 +1,6 @@
+## 0.3.0
+* Add wallpaper option to ios.
+
 ## 0.2.0
 * Remove unnecessary comments.
 * Add a better documentation for the plugin.
