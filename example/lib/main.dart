@@ -187,6 +187,11 @@ class MyApp extends StatelessWidget {
           title: const Text("Wallpaper settings"),
           trailing: const Icon(Icons.chevron_right),
         ),
+        ListTile(
+          onTap: settings.healthKit,
+          title: const Text("Open health kit"),
+          trailing: const Icon(Icons.chevron_right),
+        ),
       ],
     );
   }
