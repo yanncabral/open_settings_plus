@@ -182,6 +182,11 @@ class MyApp extends StatelessWidget {
           title: const Text("Open sounds and haptics"),
           trailing: const Icon(Icons.chevron_right),
         ),
+        ListTile(
+          onTap: settings.wallpapers,
+          title: const Text("Wallpaper settings"),
+          trailing: const Icon(Icons.chevron_right),
+        ),
       ],
     );
   }

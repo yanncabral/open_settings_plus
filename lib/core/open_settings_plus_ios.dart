@@ -202,4 +202,10 @@ class OpenSettingsPlusIOS extends OpenSettingsPlus {
   Future<bool> soundsAndHaptics() {
     return sendCustomMessage('App-prefs:Sounds');
   }
+
+  /// Open iOS settings in `Wallpapers` section`
+  /// returns operation successful or failure.
+  Future<bool> wallpapers() {
+    return sendCustomMessage('App-prefs:Wallpaper');
+  }
 }
