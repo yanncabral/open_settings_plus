@@ -110,7 +110,7 @@ class OpenSettingsPlusIOS extends OpenSettingsPlus {
   /// Open iOS settings in HealthKit section.
   /// returns operation successful or failure.
   Future<bool> healthKit() {
-    return sendCustomMessage('App-Prefs:HealthKit');
+    return sendCustomMessage('App-prefs:HEALTH&path=SOURCES');
   }
 
   /// Open iOS settings in iCloud section.
