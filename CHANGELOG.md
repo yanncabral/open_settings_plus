@@ -1,3 +1,6 @@
+## 0.3.2
+* Removed unnecessary NDK declaration from Android build.gradle to eliminate compilation warning when no C/C++ dependencies are present. ([View Contributor's Github](https://github.com/Petrol-))
+
 ## 0.3.1
 * Fix health settings for ios.
 
