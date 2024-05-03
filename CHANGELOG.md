@@ -1,3 +1,6 @@
+## 0.3.3
+* Change Java version to 11 and gradle to 7.4.2 to solve apk build error ([View Contributor's Github](https://github.com/lcmacedo))
+
 ## 0.3.2
 * Removed unnecessary NDK declaration from Android build.gradle to eliminate compilation warning when no C/C++ dependencies are present. ([View Contributor's Github](https://github.com/Petrol-))
 
