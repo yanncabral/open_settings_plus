@@ -9,6 +9,14 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// {@macro open_settings_plus_android}
   const OpenSettingsPlusAndroid();
 
+  /// Open Android settings.
+  /// returns operation successful or failure.
+  Future<bool> call() {
+    return sendCustomMessage(
+      'android.settings.SETTINGS',
+    );
+  }
+
   /// Open Android settings in `Wi-Fi` section.
   /// returns operation successful or failure.
   Future<bool> wifi() {
