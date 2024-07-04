@@ -38,7 +38,25 @@ class OpenSettingsPlusPlugin: FlutterPlugin, MethodCallHandler {
     val intent = Intent(target)
     if (intent.action != null) {
       intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-      intent.data = Uri.fromParts("package", mContext.packageName, null)
+
+      when (target) {
+        "android.settings.APP_NOTIFICATION_SETTINGS" -> {
+          if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            intent.putExtra("android.provider.extra.APP_PACKAGE", mContext.packageName)
+          } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            intent.putExtra("app_package", mContext.packageName)
+            intent.putExtra("app_uid", mContext.applicationInfo.uid)
+          } else {
+            intent.data = Uri.fromParts("package", mContext.packageName, null)
+          }
+        }
+        "android.settings.APPLICATION_DETAILS_SETTINGS" -> {
+          intent.data = Uri.fromParts("package", mContext.packageName, null)
+        }
+        else -> {
+          intent.data = Uri.fromParts("package", mContext.packageName, null)
+        }
+      }
       mContext.startActivity(intent)
     }
   }
@@ -48,8 +66,13 @@ class OpenSettingsPlusPlugin: FlutterPlugin, MethodCallHandler {
       val settingToOpen = call.argument<String>("settingToOpen")
       if (settingToOpen != null) {
         when (settingToOpen) {
-          "android.settings.APPLICATION_DETAILS_SETTINGS" -> openSettingsWithPackage(settingToOpen)
-          else -> openSettings(settingToOpen)
+          "android.settings.APPLICATION_DETAILS_SETTINGS",
+          "android.settings.APP_NOTIFICATION_SETTINGS" -> {
+            openSettingsWithPackage(settingToOpen)
+          }
+          else -> {
+            openSettings(settingToOpen)
+          }
         }
         result.success(true)
       }
