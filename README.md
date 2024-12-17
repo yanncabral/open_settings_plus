@@ -2,6 +2,13 @@
 
 A comprehensive Flutter plugin to seamlessly navigate to various settings screens on both iOS and Android devices, ensuring compatibility with the latest versions of both platforms.
 
+## Known Issues
+
+We are aware that the shortcuts in open_settings_plus are not functioning properly on the latest versions of iOS 18. This issue is currently under investigation, but progress has been challenging due to the lack of documentation or online resources regarding the new URL schemes.
+
+A fix is being actively worked on and will be released as soon as possible.
+
+
 ## 🚀 Usage
 
 To integrate `open_settings_plus` into your project, add it as a dependency in your `pubspec.yaml` file.
