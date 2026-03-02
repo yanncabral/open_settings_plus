@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:open_settings_plus/open_settings_plus.dart';
 
 void main() {
@@ -267,6 +266,11 @@ class MyApp extends StatelessWidget {
         ListTile(
           onTap: settings.bluetooth,
           title: const Text("Open bluetooth"),
+          trailing: const Icon(Icons.chevron_right),
+        ),
+        ListTile(
+          onTap: settings.tether,
+          title: const Text("Open mobile hotspot and tethering"),
           trailing: const Icon(Icons.chevron_right),
         ),
       ],

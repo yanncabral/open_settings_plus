@@ -232,6 +232,14 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
     );
   }
 
+  /// Open Android settings in `Mobile Hotspot & Tethering` section.
+  /// returns operation successful or failure.
+  Future<bool> tether() {
+    return sendCustomMessage(
+      'android.settings.TETHER_SETTINGS',
+    );
+  }
+
   /// Open Android settings in `App Notification Bubble` section.
   /// returns operation successful or failure.
   Future<bool> appNotificationBubble() {
