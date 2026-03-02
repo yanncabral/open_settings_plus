@@ -9,6 +9,37 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// {@macro open_settings_plus_android}
   const OpenSettingsPlusAndroid();
 
+  static const MethodChannel _androidMethodChannel =
+      MethodChannel('open_settings_plus');
+
+  /// Open Android settings using a raw intent action.
+  /// returns operation successful or failure.
+  Future<bool> sendAndroidIntent(String action) async {
+    final success = await _androidMethodChannel.invokeMethod<bool>(
+      'openAndroidIntent',
+      {
+        'action': action,
+        'appSpecific': false,
+      },
+    );
+
+    return success ?? false;
+  }
+
+  /// Open Android settings for the current app package.
+  /// returns operation successful or failure.
+  Future<bool> sendAndroidAppIntent(String action) async {
+    final success = await _androidMethodChannel.invokeMethod<bool>(
+      'openAndroidIntent',
+      {
+        'action': action,
+        'appSpecific': true,
+      },
+    );
+
+    return success ?? false;
+  }
+
   /// Open Android settings.
   /// returns operation successful or failure.
   Future<bool> call() {
@@ -163,7 +194,7 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `Application Details` section.
   /// returns operation successful or failure.
   Future<bool> applicationDetails() {
-    return sendCustomMessage(
+    return sendAndroidAppIntent(
       'android.settings.APPLICATION_DETAILS_SETTINGS',
     );
   }
@@ -178,10 +209,9 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
 
   /// Open Android settings in `Application Notification` section.
   /// returns operation successful or failure.
+  @Deprecated('Use appNotification() instead.')
   Future<bool> applicationNotification() {
-    return sendCustomMessage(
-      'android.settings.APPLICATION_NOTIFICATION_SETTINGS',
-    );
+    return appNotification();
   }
 
   /// Open Android settings in `Application Settings` section.
@@ -251,8 +281,16 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `App Notification` section.
   /// returns operation successful or failure.
   Future<bool> appNotification() {
-    return sendCustomMessage(
+    return sendAndroidAppIntent(
       'android.settings.APP_NOTIFICATION_SETTINGS',
+    );
+  }
+
+  /// Open Android settings in `Open by default` section.
+  /// returns operation successful or failure.
+  Future<bool> openByDefault() {
+    return sendAndroidAppIntent(
+      'android.settings.APP_OPEN_BY_DEFAULT_SETTINGS',
     );
   }
 
