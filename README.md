@@ -63,6 +63,7 @@ Navigate directly to:
 - Application Details
 - Application Development
 - Application Notifications
+- Open by Default
 - Application Write Settings
 - Battery Saver
 - Captioning

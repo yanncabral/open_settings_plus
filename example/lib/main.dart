@@ -229,6 +229,11 @@ class MyApp extends StatelessWidget {
           trailing: const Icon(Icons.chevron_right),
         ),
         ListTile(
+          onTap: settings.openByDefault,
+          title: const Text("Open by default"),
+          trailing: const Icon(Icons.chevron_right),
+        ),
+        ListTile(
           onTap: settings.appSettings,
           title: const Text("Open app settings"),
           trailing: const Icon(Icons.chevron_right),
@@ -241,11 +246,6 @@ class MyApp extends StatelessWidget {
         ListTile(
           onTap: settings.applicationDevelopment,
           title: const Text("Open application development"),
-          trailing: const Icon(Icons.chevron_right),
-        ),
-        ListTile(
-          onTap: settings.applicationNotification,
-          title: const Text("Open application notification"),
           trailing: const Icon(Icons.chevron_right),
         ),
         ListTile(

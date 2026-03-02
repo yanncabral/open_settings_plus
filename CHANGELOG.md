@@ -1,3 +1,15 @@
+## 0.4.2
+
+### 🚀 New Features
+- Added Android `openByDefault()` shortcut to open `Open by default` (`android.settings.APP_OPEN_BY_DEFAULT_SETTINGS`)
+
+### 🔧 Bug Fixes
+- Fixed Android app notification shortcut by using `android.settings.APP_NOTIFICATION_SETTINGS` and keeping compatibility with legacy `APPLICATION_NOTIFICATION_SETTINGS`
+
+### 💡 Technical Improvements
+- Added `sendAndroidIntent` and `sendAndroidAppIntent` in Android API to support scalable intent routing without growing native action lists
+- Deprecated `applicationNotification()` in favor of `appNotification()` while keeping backward compatibility
+
 ## 0.4.1
 
 ### 🚀 New Features
