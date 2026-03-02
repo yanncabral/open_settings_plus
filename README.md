@@ -8,7 +8,6 @@ We are aware that the shortcuts in open_settings_plus are not functioning proper
 
 A fix is being actively worked on and will be released as soon as possible.
 
-
 ## 🚀 Usage
 
 To integrate `open_settings_plus` into your project, add it as a dependency in your `pubspec.yaml` file.
@@ -69,6 +68,7 @@ Navigate directly to:
 - Captioning
 - Cast
 - Data Usage
+- Mobile Hotspot & Tethering
 - App Notification Bubble
 - Search
 - Biometric Enrollment
@@ -81,7 +81,7 @@ Navigate directly to:
 - Manage All Applications
 - Manage External Sources
 - Manage Overlay
-... and more features being added regularly!
+  ... and more features being added regularly!
 
 ### iOS:
 
@@ -117,7 +117,7 @@ Navigate directly to:
 - Storage & Backup
 - Siri
 - Sounds & Haptics
-... and more features being added regularly!
+  ... and more features being added regularly!
 
 ## 🙏 Acknowledgments
 
@@ -133,4 +133,3 @@ Encountered an issue or have a feature in mind? We'd love to hear from you!
 ---
 
 This revised README provides a more structured and polished presentation of the plugin's features and usage.
-

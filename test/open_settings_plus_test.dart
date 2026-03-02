@@ -7,14 +7,12 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockOpenSettingsPlusPlatform
     with MockPlatformInterfaceMixin
     implements OpenSettingsPlusPlatform {
+  String? lastCalled;
+
   @override
   Future<bool> sendMessageToNative(String message) async {
-    switch (message) {
-      case 'wifi':
-        return true;
-      default:
-        return false;
-    }
+    lastCalled = message;
+    return true;
   }
 }
 
@@ -31,5 +29,15 @@ void main() {
     OpenSettingsPlusPlatform.instance = fakePlatform;
 
     expect(await openSettingsPlusPlugin.sendCustomMessage('wifi'), true);
+    expect(fakePlatform.lastCalled, 'wifi');
+  });
+
+  test('android tether shortcut', () async {
+    const settings = OpenSettingsPlusAndroid();
+    final fakePlatform = MockOpenSettingsPlusPlatform();
+    OpenSettingsPlusPlatform.instance = fakePlatform;
+
+    expect(await settings.tether(), true);
+    expect(fakePlatform.lastCalled, 'android.settings.TETHER_SETTINGS');
   });
 }
