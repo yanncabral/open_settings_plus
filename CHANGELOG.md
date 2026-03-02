@@ -1,4 +1,4 @@
-## Unreleased
+## 0.4.1
 
 ### 🚀 New Features
 - Added Android `tether()` shortcut to open `Mobile Hotspot & Tethering` (`android.settings.TETHER_SETTINGS`)
