@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'open_settings_plus'
-  s.version          = '0.4.2'
+  s.version          = '0.5.0'
   s.summary          = 'Open settings easily.'
   s.description      = <<-DESC
   The most complete flutter plugin packages for open various settings screen, covering newer versions of ios and android.

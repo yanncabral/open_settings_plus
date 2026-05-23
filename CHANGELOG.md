@@ -1,4 +1,4 @@
-## Unreleased
+## 0.5.0
 
 ### 💡 Technical Improvements
 - Added iOS Swift Package Manager support while keeping CocoaPods compatibility.
