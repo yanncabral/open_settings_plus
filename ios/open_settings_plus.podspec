@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'open_settings_plus'
-  s.version          = '0.0.1'
+  s.version          = '0.4.2'
   s.summary          = 'Open settings easily.'
   s.description      = <<-DESC
   The most complete flutter plugin packages for open various settings screen, covering newer versions of ios and android.
@@ -13,9 +13,9 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Yann Cabral' => 'iamyanndias@gmail.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'open_settings_plus/Sources/open_settings_plus/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '11.0'
+  s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

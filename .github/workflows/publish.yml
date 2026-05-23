@@ -1,4 +1,4 @@
-name: Publish to pub.dev
+name: Validate and publish
 
 on:
   push:
@@ -6,16 +6,15 @@ on:
       - 'main'
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
+  pull_request:
+    branches:
+      - 'main'
 
 jobs:
-  publish:
-    strategy:
-        matrix:
-          flutter-version:
-            - "3.13.0"
+  validate-and-publish:
     permissions:
       id-token: write
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: 📚 Git Checkout
         uses: actions/checkout@v4
@@ -23,16 +22,35 @@ jobs:
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ matrix.flutter-version }}
+          channel: stable
+          cache: true
+
+      - name: 🔎 Show tool versions
+        run: |
+          flutter --version
+          dart --version
+          xcodebuild -version
+          pod --version
 
       - name: 📦 Install Dependencies
         run: flutter pub get
-      
+
       - name: ✨ Check Formatting
         run: dart format --set-exit-if-changed .
 
       - name: 🕵️ Analyze
         run: dart analyze --fatal-infos --fatal-warnings .
 
+      - name: 🧪 Test
+        run: flutter test
+
+      - name: 🍎 Validate iOS example with Swift Package Manager
+        run: |
+          flutter config --enable-swift-package-manager
+          flutter pub get
+          flutter build ios --no-codesign --verbose
+        working-directory: example
+
       - name: 🚀 Publish
+        if: startsWith(github.ref, 'refs/tags/v')
         run: dart pub publish --force
