@@ -17,9 +17,7 @@ class MyApp extends StatelessWidget {
             const SliverAppBar(
               pinned: true,
               backgroundColor: Colors.blue,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text("Open settings +"),
-              ),
+              flexibleSpace: FlexibleSpaceBar(title: Text("Open settings +")),
               centerTitle: true,
               expandedHeight: 220,
             ),
@@ -27,11 +25,7 @@ class MyApp extends StatelessWidget {
           body: switch (OpenSettingsPlus.shared) {
             OpenSettingsPlusAndroid settings => _buildAndroidList(settings),
             OpenSettingsPlusIOS settings => _buildIOSList(settings),
-            _ => const Center(
-                child: Text(
-                  "Unsupported platform.",
-                ),
-              ),
+            _ => const Center(child: Text("Unsupported platform.")),
           },
         ),
       ),

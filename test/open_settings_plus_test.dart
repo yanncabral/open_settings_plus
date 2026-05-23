@@ -52,9 +52,9 @@ void main() {
       lastCall = null;
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(channel, (call) async {
-        lastCall = call;
-        return true;
-      });
+            lastCall = call;
+            return true;
+          });
     });
 
     tearDown(() {
