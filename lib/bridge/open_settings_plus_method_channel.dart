@@ -10,12 +10,9 @@ class MethodChannelOpenSettingsPlus extends OpenSettingsPlusPlatform {
 
   @override
   Future<bool> sendMessageToNative(String message) async {
-    final success = await methodChannel.invokeMethod<bool>(
-      'openSettings',
-      {
-        'settingToOpen': message,
-      },
-    );
+    final success = await methodChannel.invokeMethod<bool>('openSettings', {
+      'settingToOpen': message,
+    });
 
     return success ?? false;
   }

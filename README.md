@@ -8,6 +8,10 @@ We are aware that the shortcuts in open_settings_plus are not functioning proper
 
 A fix is being actively worked on and will be released as soon as possible.
 
+## 📦 Installation
+
+Add `open_settings_plus` to your `pubspec.yaml` as usual. On iOS, the plugin supports both CocoaPods and Swift Package Manager (SPM). CocoaPods remains supported for existing Flutter projects, while SPM is available when using Flutter `3.41.0` or newer with Flutter's Swift Package Manager integration enabled. The iOS deployment target is `12.0`.
+
 ## 🚀 Usage
 
 To integrate `open_settings_plus` into your project, add it as a dependency in your `pubspec.yaml` file.

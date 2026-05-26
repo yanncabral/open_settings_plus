@@ -9,18 +9,16 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// {@macro open_settings_plus_android}
   const OpenSettingsPlusAndroid();
 
-  static const MethodChannel _androidMethodChannel =
-      MethodChannel('open_settings_plus');
+  static const MethodChannel _androidMethodChannel = MethodChannel(
+    'open_settings_plus',
+  );
 
   /// Open Android settings using a raw intent action.
   /// returns operation successful or failure.
   Future<bool> sendAndroidIntent(String action) async {
     final success = await _androidMethodChannel.invokeMethod<bool>(
       'openAndroidIntent',
-      {
-        'action': action,
-        'appSpecific': false,
-      },
+      {'action': action, 'appSpecific': false},
     );
 
     return success ?? false;
@@ -31,10 +29,7 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   Future<bool> sendAndroidAppIntent(String action) async {
     final success = await _androidMethodChannel.invokeMethod<bool>(
       'openAndroidIntent',
-      {
-        'action': action,
-        'appSpecific': true,
-      },
+      {'action': action, 'appSpecific': true},
     );
 
     return success ?? false;
@@ -43,152 +38,114 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings.
   /// returns operation successful or failure.
   Future<bool> call() {
-    return sendCustomMessage(
-      'android.settings.SETTINGS',
-    );
+    return sendCustomMessage('android.settings.SETTINGS');
   }
 
   /// Open Android settings in `Wi-Fi` section.
   /// returns operation successful or failure.
   Future<bool> wifi() {
-    return sendCustomMessage(
-      'android.settings.WIFI_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.WIFI_SETTINGS');
   }
 
   /// Open Android settings in `NFC` section.
   Future<bool> nfc() {
-    return sendCustomMessage(
-      'android.settings.NFC_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.NFC_SETTINGS');
   }
 
   /// Open Android settings in `Data & Roaming` section.
   /// returns operation successful or failure.
   Future<bool> dataRoaming() {
-    return sendCustomMessage(
-      'android.settings.DATA_ROAMING_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.DATA_ROAMING_SETTINGS');
   }
 
   /// Open Android settings in `Location` section.
   /// returns operation successful or failure.
   Future<bool> locationSource() {
-    return sendCustomMessage(
-      'android.settings.LOCATION_SOURCE_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.LOCATION_SOURCE_SETTINGS');
   }
 
   /// Open Android settings in `App Settings` section.
   /// returns operation successful or failure.
   Future<bool> appSettings() {
-    return sendCustomMessage(
-      'android.settings.APPLICATION_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.APPLICATION_SETTINGS');
   }
 
   /// Open Android settings in `Bluetooth` section.
   /// returns operation successful or failure.
   Future<bool> bluetooth() {
-    return sendCustomMessage(
-      'android.settings.BLUETOOTH_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.BLUETOOTH_SETTINGS');
   }
 
   /// Open Android settings in `Notification` section.
   /// returns operation successful or failure.
   Future<bool> notification() {
-    return sendCustomMessage(
-      'android.settings.NOTIFICATION_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.NOTIFICATION_SETTINGS');
   }
 
   /// Open Android settings in `Security` section.
   /// returns operation successful or failure.
   Future<bool> security() {
-    return sendCustomMessage(
-      'android.settings.SECURITY_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.SECURITY_SETTINGS');
   }
 
   /// Open Android settings in `Sound` section.
   /// returns operation successful or failure.
   Future<bool> sound() {
-    return sendCustomMessage(
-      'android.settings.SOUND_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.SOUND_SETTINGS');
   }
 
   /// Open Android settings in `Display` section.
   /// returns operation successful or failure.
   Future<bool> display() {
-    return sendCustomMessage(
-      'android.settings.DISPLAY_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.DISPLAY_SETTINGS');
   }
 
   /// Open Android settings in `Date` section.
   /// returns operation successful or failure.
   Future<bool> date() {
-    return sendCustomMessage(
-      'android.settings.DATE_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.DATE_SETTINGS');
   }
 
   /// Open Android settings in `Device Info` section.
   /// returns operation successful or failure.
   Future<bool> deviceInfo() {
-    return sendCustomMessage(
-      'android.settings.DEVICE_INFO_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.DEVICE_INFO_SETTINGS');
   }
 
   /// Open Android settings in `Internal Storage` section.
   /// returns operation successful or failure.
   Future<bool> internalStorage() {
-    return sendCustomMessage(
-      'android.settings.INTERNAL_STORAGE_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.INTERNAL_STORAGE_SETTINGS');
   }
 
   /// Open Android settings in `Memory Card` section.
   /// returns operation successful or failure.
   Future<bool> memoryCard() {
-    return sendCustomMessage(
-      'android.settings.MEMORY_CARD_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.MEMORY_CARD_SETTINGS');
   }
 
   /// Open Android settings in `Accessbility` section.
   /// returns operation successful or failure.
   Future<bool> accessibility() {
-    return sendCustomMessage(
-      'android.settings.ACCESSIBILITY_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.ACCESSIBILITY_SETTINGS');
   }
 
   /// Open Android settings in `Add Account` section.
   /// returns operation successful or failure.
   Future<bool> addAccount() {
-    return sendCustomMessage(
-      'android.settings.ADD_ACCOUNT_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.ADD_ACCOUNT_SETTINGS');
   }
 
   /// Open Android settings in `Airplane Mode` section.
   /// returns operation successful or failure.
   Future<bool> airplaneMode() {
-    return sendCustomMessage(
-      'android.settings.AIRPLANE_MODE_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.AIRPLANE_MODE_SETTINGS');
   }
 
   /// Open Android settings in `Apn Settings` section.
   /// returns operation successful or failure.
   Future<bool> apnSettings() {
-    return sendCustomMessage(
-      'android.settings.APN_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.APN_SETTINGS');
   }
 
   /// Open Android settings in `Application Details` section.
@@ -217,57 +174,43 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `Application Settings` section.
   /// returns operation successful or failure.
   Future<bool> applicationSettings() {
-    return sendCustomMessage(
-      'android.settings.APPLICATION_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.APPLICATION_SETTINGS');
   }
 
   /// Open Android settings in `Application Write Settings` section.
   /// returns operation successful or failure.
   Future<bool> applicationWriteSettings() {
-    return sendCustomMessage(
-      'android.settings.APPLICATION_WRITE_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.APPLICATION_WRITE_SETTINGS');
   }
 
   /// Open Android settings in `Battery Saver` section.
   /// returns operation successful or failure.
   Future<bool> batterySaver() {
-    return sendCustomMessage(
-      'android.settings.BATTERY_SAVER_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.BATTERY_SAVER_SETTINGS');
   }
 
   /// Open Android settings in `Captioning` section.
   /// returns operation successful or failure.
   Future<bool> captioning() {
-    return sendCustomMessage(
-      'android.settings.CAPTIONING_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.CAPTIONING_SETTINGS');
   }
 
   /// Open Android settings in `Cast` section.
   /// returns operation successful or failure.
   Future<bool> cast() {
-    return sendCustomMessage(
-      'android.settings.CAST_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.CAST_SETTINGS');
   }
 
   /// Open Android settings in `Data Usage` section.
   /// returns operation successful or failure.
   Future<bool> dataUsage() {
-    return sendCustomMessage(
-      'android.settings.DATA_USAGE_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.DATA_USAGE_SETTINGS');
   }
 
   /// Open Android settings in `Mobile Hotspot & Tethering` section.
   /// returns operation successful or failure.
   Future<bool> tether() {
-    return sendCustomMessage(
-      'android.settings.TETHER_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.TETHER_SETTINGS');
   }
 
   /// Open Android settings in `App Notification Bubble` section.
@@ -281,9 +224,7 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `App Notification` section.
   /// returns operation successful or failure.
   Future<bool> appNotification() {
-    return sendAndroidAppIntent(
-      'android.settings.APP_NOTIFICATION_SETTINGS',
-    );
+    return sendAndroidAppIntent('android.settings.APP_NOTIFICATION_SETTINGS');
   }
 
   /// Open Android settings in `Open by default` section.
@@ -297,33 +238,25 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `Search` section.
   /// returns operation successful or failure.
   Future<bool> search() {
-    return sendCustomMessage(
-      'android.search.action.SEARCH_SETTINGS',
-    );
+    return sendCustomMessage('android.search.action.SEARCH_SETTINGS');
   }
 
   /// Open Android settings in `Biometric Enroll` section.
   /// returns operation successful or failure.
   Future<bool> biometricEnroll() {
-    return sendCustomMessage(
-      'android.settings.BIOMETRIC_ENROLL',
-    );
+    return sendCustomMessage('android.settings.BIOMETRIC_ENROLL');
   }
 
   /// Open Android settings in `HardKeyboard` section.
   /// returns operation successful or failure.
   Future<bool> hardwareKeyboard() {
-    return sendCustomMessage(
-      'android.settings.HARD_KEYBOARD_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.HARD_KEYBOARD_SETTINGS');
   }
 
   /// Open Android settings in `Home` section.
   /// returns operation successful or failure.
   Future<bool> home() {
-    return sendCustomMessage(
-      'android.settings.HOME_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.HOME_SETTINGS');
   }
 
   /// Open Android settings in `Ignore Background Data Restrictions` section.
@@ -345,25 +278,19 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `Input Method` section.
   /// returns operation successful or failure.
   Future<bool> inputMethod() {
-    return sendCustomMessage(
-      'android.settings.INPUT_METHOD_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.INPUT_METHOD_SETTINGS');
   }
 
   /// Open Android settings in `Input Method Subtype` section.
   /// returns operation successful or failure.
   Future<bool> inputMethodSubtype() {
-    return sendCustomMessage(
-      'android.settings.INPUT_METHOD_SUBTYPE_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.INPUT_METHOD_SUBTYPE_SETTINGS');
   }
 
   /// Open Android settings in `Locale` section.
   /// returns operation successful or failure.
   Future<bool> locale() {
-    return sendCustomMessage(
-      'android.settings.LOCALE_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.LOCALE_SETTINGS');
   }
 
   /// Open Android settings in `Manage All Applications` section.
@@ -377,17 +304,13 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `Manage Application` section.
   /// returns operation successful or failure.
   Future<bool> manageApplication() {
-    return sendCustomMessage(
-      'android.settings.MANAGE_APPLICATIONS_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.MANAGE_APPLICATIONS_SETTINGS');
   }
 
   /// Open Android settings in `Manage Default Apps` section.
   /// returns operation successful or failure.
   Future<bool> manageDefaultApps() {
-    return sendCustomMessage(
-      'android.settings.MANAGE_DEFAULT_APPS_SETTINGS',
-    );
+    return sendCustomMessage('android.settings.MANAGE_DEFAULT_APPS_SETTINGS');
   }
 
   /// Open Android settings in `Manage External Sources` section.
@@ -401,8 +324,6 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `Manage Overlay` section.
   /// returns operation successful or failure.
   Future<bool> manageOverlay() {
-    return sendCustomMessage(
-      'android.settings.MANAGE_OVERLAY_PERMISSION',
-    );
+    return sendCustomMessage('android.settings.MANAGE_OVERLAY_PERMISSION');
   }
 }

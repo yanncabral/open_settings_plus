@@ -1,3 +1,11 @@
+## 0.5.0
+
+### 💡 Technical Improvements
+- Added iOS Swift Package Manager support while keeping CocoaPods compatibility.
+- Moved the iOS Swift plugin source into the SwiftPM target layout and updated the podspec source path.
+- Raised the Flutter/Dart lower bounds required by Flutter's current SPM plugin integration.
+- Updated the example app to opt into Swift Package Manager and added macOS CI validation for `flutter build ios --no-codesign`.
+
 ## 0.4.2
 
 ### 🚀 New Features
