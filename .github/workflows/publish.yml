@@ -51,6 +51,10 @@ jobs:
           flutter build ios --no-codesign --verbose
         working-directory: example
 
+      - name: 🎯 Setup Dart for pub.dev publishing
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: dart-lang/setup-dart@v1
+
       - name: 🚀 Publish
         if: startsWith(github.ref, 'refs/tags/v')
         run: dart pub publish --force
