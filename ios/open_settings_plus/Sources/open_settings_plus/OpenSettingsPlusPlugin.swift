@@ -13,17 +13,16 @@ public class OpenSettingsPlusPlugin: NSObject, FlutterPlugin {
       let arguments = call.arguments as? [String: Any]
       let argument = arguments?["settingToOpen"] as? String ?? ""
 
-      print("OpenSettingsPlusPlugin: \(argument)")
-
-      if let url = URL(string: argument) {
-        if UIApplication.shared.canOpenURL(url) {
-          if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-          } else {
-            UIApplication.shared.openURL(url)
-          }
+      if let url = URL(string: argument), UIApplication.shared.canOpenURL(url) {
+        UIApplication.shared.open(url, options: [:]) { success in
+          result(success)
         }
+      } else {
+        result(false)
       }
+    } else if call.method == "getIOSVersion" {
+      let version = UIDevice.current.systemVersion
+      result(version)
     } else {
       result(false)
     }

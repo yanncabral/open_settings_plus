@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:open_settings_plus/bridge/open_settings_plus_platform_interface.dart';
 
