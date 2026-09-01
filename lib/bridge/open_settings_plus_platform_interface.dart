@@ -28,4 +28,9 @@ abstract class OpenSettingsPlusPlatform extends PlatformInterface {
   /// This way we can pass any message to native side and handle it there.
   /// Note: android and ios have different implementation.
   Future<bool> sendMessageToNative(String message);
+
+  /// Returns the iOS version string (e.g. `"26.0"`).
+  ///
+  /// On Android this returns `"0"`.
+  Future<String> getIOSVersion() => Future.value('0');
 }

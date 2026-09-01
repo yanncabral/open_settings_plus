@@ -16,4 +16,10 @@ class MethodChannelOpenSettingsPlus extends OpenSettingsPlusPlatform {
 
     return success ?? false;
   }
+
+  @override
+  Future<String> getIOSVersion() async {
+    final version = await methodChannel.invokeMethod<String>('getIOSVersion');
+    return version ?? '0';
+  }
 }
