@@ -1,3 +1,9 @@
+## 0.5.1
+
+### 🔧 Bug Fixes
+- Removed the deprecated `UIApplication.canOpenURL(_:)` check from the iOS implementation.
+- Removed the obsolete pre-iOS 10 URL-opening fallback while preserving the plugin's existing behavior.
+
 ## 0.5.0
 
 ### 💡 Technical Improvements
