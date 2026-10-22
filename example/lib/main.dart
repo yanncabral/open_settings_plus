@@ -36,6 +36,16 @@ class MyApp extends StatelessWidget {
     return ListView(
       children: [
         ListTile(
+          onTap: settings.currentAppSettings,
+          title: const Text("Open this app's settings"),
+          trailing: const Icon(Icons.chevron_right),
+        ),
+        ListTile(
+          onTap: settings.appNotification,
+          title: const Text("Open this app's notification settings"),
+          trailing: const Icon(Icons.chevron_right),
+        ),
+        ListTile(
           onTap: settings,
           title: const Text("Open settings"),
           trailing: const Icon(Icons.chevron_right),
@@ -228,8 +238,8 @@ class MyApp extends StatelessWidget {
           trailing: const Icon(Icons.chevron_right),
         ),
         ListTile(
-          onTap: settings.appSettings,
-          title: const Text("Open app settings"),
+          onTap: settings.allAppSettings,
+          title: const Text("Open installed apps"),
           trailing: const Icon(Icons.chevron_right),
         ),
         ListTile(
@@ -243,8 +253,8 @@ class MyApp extends StatelessWidget {
           trailing: const Icon(Icons.chevron_right),
         ),
         ListTile(
-          onTap: settings.applicationSettings,
-          title: const Text("Open application settings"),
+          onTap: settings.currentAppSettings,
+          title: const Text("Open this app's settings"),
           trailing: const Icon(Icons.chevron_right),
         ),
         ListTile(
