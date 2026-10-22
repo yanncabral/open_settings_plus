@@ -9,30 +9,68 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// {@macro open_settings_plus_android}
   const OpenSettingsPlusAndroid();
 
-  static const MethodChannel _androidMethodChannel = MethodChannel(
-    'open_settings_plus',
-  );
-
-  /// Open Android settings using a raw intent action.
-  /// returns operation successful or failure.
-  Future<bool> sendAndroidIntent(String action) async {
-    final success = await _androidMethodChannel.invokeMethod<bool>(
-      'openAndroidIntent',
-      {'action': action, 'appSpecific': false},
+  /// Open a raw Android action in a separate task by default.
+  ///
+  /// With [asAnotherTask] false, uses the attached Activity when available.
+  /// Without an Activity, Android requires a new task even when false.
+  Future<bool> sendAndroidIntent(String action, {bool asAnotherTask = true}) {
+    return OpenSettingsPlusPlatform.instance.sendAndroidIntent(
+      action,
+      asAnotherTask: asAnotherTask,
     );
-
-    return success ?? false;
   }
 
-  /// Open Android settings for the current app package.
-  /// returns operation successful or failure.
-  Future<bool> sendAndroidAppIntent(String action) async {
-    final success = await _androidMethodChannel.invokeMethod<bool>(
-      'openAndroidIntent',
-      {'action': action, 'appSpecific': true},
+  /// Open a raw Android action for the current app package.
+  ///
+  /// Falls back to the app details screen when the requested destination fails.
+  /// A true result reports a launch, including this fallback.
+  Future<bool> sendAndroidAppIntent(
+    String action, {
+    bool asAnotherTask = true,
+  }) {
+    return OpenSettingsPlusPlatform.instance.sendAndroidIntent(
+      action,
+      appSpecific: true,
+      asAnotherTask: asAnotherTask,
     );
+  }
 
-    return success ?? false;
+  /// Open an Android 10+ settings panel above the calling app.
+  ///
+  /// Returns [SettingsOpenResult.unsupported] on older Android versions or when
+  /// the device has no matching panel. Panels never fall back.
+  /// Without an attached Activity, Android opens a new task.
+  Future<SettingsOpenResult> openPanel(
+    AndroidSettingsPanel panel, {
+    bool asAnotherTask = false,
+  }) {
+    return OpenSettingsPlusPlatform.instance.openAndroidPanel(
+      panel.name,
+      asAnotherTask: asAnotherTask,
+    );
+  }
+
+  /// Open this app's language settings on Android 13+.
+  ///
+  /// Older versions fall back to this app's details. The app must declare its
+  /// supported languages for Android to offer per-app language selection.
+  Future<bool> appLocale() {
+    return sendAndroidAppIntent('android.settings.APP_LOCALE_SETTINGS');
+  }
+
+  /// Open this app's exact-alarm access settings on Android 12+.
+  ///
+  /// Declare SCHEDULE_EXACT_ALARM in the app manifest when requesting access.
+  /// Older versions fall back to app details. A launch does not grant access.
+  Future<bool> exactAlarm() {
+    return sendAndroidAppIntent(
+      'android.settings.REQUEST_SCHEDULE_EXACT_ALARM',
+    );
+  }
+
+  /// Open Android's VPN settings.
+  Future<bool> vpn() {
+    return sendAndroidIntent('android.settings.VPN_SETTINGS');
   }
 
   /// Open Android settings.
@@ -64,10 +102,24 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
     return sendCustomMessage('android.settings.LOCATION_SOURCE_SETTINGS');
   }
 
-  /// Open Android settings in `App Settings` section.
-  /// returns operation successful or failure.
-  Future<bool> appSettings() {
+  /// Open Android's list of installed apps.
+  ///
+  /// This legacy name opens the app list, rather than this app's settings.
+  @Deprecated('Use allAppSettings() for the app list or currentAppSettings().')
+  Future<bool> appSettings() => allAppSettings();
+
+  /// Open Android's list of installed apps.
+  Future<bool> allAppSettings() {
     return sendCustomMessage('android.settings.APPLICATION_SETTINGS');
+  }
+
+  /// Open the settings for the current app package.
+  ///
+  /// A true result confirms a launch request, never a permission change.
+  Future<bool> currentAppSettings() {
+    return sendAndroidAppIntent(
+      'android.settings.APPLICATION_DETAILS_SETTINGS',
+    );
   }
 
   /// Open Android settings in `Bluetooth` section.
@@ -148,13 +200,8 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
     return sendCustomMessage('android.settings.APN_SETTINGS');
   }
 
-  /// Open Android settings in `Application Details` section.
-  /// returns operation successful or failure.
-  Future<bool> applicationDetails() {
-    return sendAndroidAppIntent(
-      'android.settings.APPLICATION_DETAILS_SETTINGS',
-    );
-  }
+  /// Open the current app's settings; alias for [currentAppSettings].
+  Future<bool> applicationDetails() => currentAppSettings();
 
   /// Open Android settings in `Application Development` section.
   /// returns operation successful or failure.
@@ -171,16 +218,16 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
     return appNotification();
   }
 
-  /// Open Android settings in `Application Settings` section.
-  /// returns operation successful or failure.
-  Future<bool> applicationSettings() {
-    return sendCustomMessage('android.settings.APPLICATION_SETTINGS');
-  }
+  /// Open Android's list of installed apps.
+  @Deprecated('Use allAppSettings() for the app list or currentAppSettings().')
+  Future<bool> applicationSettings() => allAppSettings();
 
   /// Open Android settings in `Application Write Settings` section.
   /// returns operation successful or failure.
   Future<bool> applicationWriteSettings() {
-    return sendCustomMessage('android.settings.APPLICATION_WRITE_SETTINGS');
+    return sendAndroidAppIntent(
+      'android.settings.action.MANAGE_WRITE_SETTINGS',
+    );
   }
 
   /// Open Android settings in `Battery Saver` section.
@@ -216,7 +263,7 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `App Notification Bubble` section.
   /// returns operation successful or failure.
   Future<bool> appNotificationBubble() {
-    return sendCustomMessage(
+    return sendAndroidAppIntent(
       'android.settings.APP_NOTIFICATION_BUBBLE_SETTINGS',
     );
   }
@@ -262,7 +309,7 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `Ignore Background Data Restrictions` section.
   /// returns operation successful or failure.
   Future<bool> ignoreBackgroundDataRestrictions() {
-    return sendCustomMessage(
+    return sendAndroidAppIntent(
       'android.settings.IGNORE_BACKGROUND_DATA_RESTRICTIONS_SETTINGS',
     );
   }
@@ -316,14 +363,27 @@ class OpenSettingsPlusAndroid extends OpenSettingsPlus {
   /// Open Android settings in `Manage External Sources` section.
   /// returns operation successful or failure.
   Future<bool> manageExternalSources() {
-    return sendCustomMessage(
-      'android.settings.MANAGE_EXTERNAL_SOURCES_SETTINGS',
-    );
+    return sendAndroidAppIntent('android.settings.MANAGE_UNKNOWN_APP_SOURCES');
   }
 
   /// Open Android settings in `Manage Overlay` section.
   /// returns operation successful or failure.
   Future<bool> manageOverlay() {
-    return sendCustomMessage('android.settings.MANAGE_OVERLAY_PERMISSION');
+    return sendAndroidAppIntent('android.settings.MANAGE_OVERLAY_PERMISSION');
   }
+}
+
+/// Android 10+ floating settings panels.
+enum AndroidSettingsPanel {
+  /// Wi-Fi connectivity controls.
+  wifi,
+
+  /// Internet connection controls.
+  internetConnectivity,
+
+  /// NFC controls, when supported by the device.
+  nfc,
+
+  /// Volume controls for all streams.
+  volume,
 }

@@ -1,4 +1,5 @@
 import 'package:open_settings_plus/bridge/open_settings_plus_method_channel.dart';
+import 'package:open_settings_plus/core/settings_open_result.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 /// The interface that implementations of open_settings_plus must implement.
@@ -28,4 +29,37 @@ abstract class OpenSettingsPlusPlatform extends PlatformInterface {
   /// This way we can pass any message to native side and handle it there.
   /// Note: android and ios have different implementation.
   Future<bool> sendMessageToNative(String message);
+
+  /// Opens an Android intent, optionally scoped to this app.
+  ///
+  /// Returns false when an implementation does not support Android intents.
+  /// Success confirms an opening request, never a permission change.
+  Future<bool> sendAndroidIntent(
+    String action, {
+    bool appSpecific = false,
+    bool asAnotherTask = true,
+  }) async => false;
+
+  /// Opens an Android settings panel without changing the underlying setting.
+  ///
+  /// Returns [SettingsOpenResult.unsupported] when panels are unavailable.
+  Future<SettingsOpenResult> openAndroidPanel(
+    String panel, {
+    bool asAnotherTask = false,
+  }) async => SettingsOpenResult.unsupported;
+
+  /// Opens [target], distinguishing an exact destination from an app fallback.
+  ///
+  /// [appSpecific] scopes Android intents to this app. [asAnotherTask] controls
+  /// Android task placement. [fallbackToAppSettings] permits opening the app's
+  /// settings if the requested destination cannot open.
+  ///
+  /// Implementations without this API return [SettingsOpenResult.unsupported].
+  /// No result implies that a setting or permission changed.
+  Future<SettingsOpenResult> openSettingsTarget(
+    String target, {
+    bool appSpecific = false,
+    bool asAnotherTask = true,
+    bool fallbackToAppSettings = true,
+  }) async => SettingsOpenResult.unsupported;
 }

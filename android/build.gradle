@@ -2,14 +2,14 @@ group 'br.com.yanncabral.open_settings_plus'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.8.20'
+    ext.kotlin_version = '2.2.10'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath 'com.android.tools.build:gradle:8.13.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -22,33 +22,54 @@ allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+// Match AGP / Flutter: built-in Kotlin defaults to enabled on AGP 9+, while
+// consumers may explicitly disable it to keep using the legacy Kotlin plugin.
+def agpMajorVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
+def builtInKotlinProperty = project.findProperty('android.builtInKotlin')
+def builtInKotlinEnabled = agpMajorVersion >= 9 &&
+    (builtInKotlinProperty == null || builtInKotlinProperty.toString().toBoolean())
+if (!builtInKotlinEnabled) {
+    apply plugin: 'kotlin-android'
+}
 
 android {
-    // Conditional for compatibility with AGP <4.2.
-    if (project.android.hasProperty("namespace")) {
-        namespace "br.com.yanncabral.open_settings_plus"
-    }
-// Conditional for compatibility with AGP <4.2.
-    if (project.android.hasProperty("testNamespace")) {
-        testNamespace "br.com.yanncabral.open_settings_plus.test"
-    }
-    compileSdkVersion 34
+    namespace "br.com.yanncabral.open_settings_plus"
+    testNamespace "br.com.yanncabral.open_settings_plus.test"
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = '11'
+    if (!builtInKotlinEnabled) {
+        kotlinOptions {
+            jvmTarget = '11'
+        }
     }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    defaultConfig {
-        minSdkVersion 16
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
+
+    defaultConfig {
+        minSdk = 16
+    }
+}
+
+if (builtInKotlinEnabled) {
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+        }
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
 }

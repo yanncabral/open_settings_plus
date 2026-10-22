@@ -1,3 +1,20 @@
+## Unreleased
+
+- Fix iOS method-channel calls that never completed; report URL launch outcomes.
+- Add public iOS notification settings routing and configurable detailed fallback.
+- Add `SettingsOpenResult`, `SettingsTarget`, the shared `OpenSettingsPlus.open()`
+  API and detailed native target opening without removing existing bool APIs.
+- Add explicit `currentAppSettings()` and Android `allAppSettings()` names;
+  deprecate ambiguous aliases while preserving their destinations.
+- Route Android intents and panels through the platform interface; support
+  Activity-aware task placement, Android 10+ panels, app language, exact alarm
+  access and VPN settings. Correct app-specific intent routing and fallback.
+- Add native iOS completion/fallback regression tests and expand Dart coverage.
+- Align Android builds with SDK 36, AGP 8.13.2 and Kotlin 2.2.10, with conditional
+  support for AGP 9 built-in Kotlin. Keep Flutter 3.41/Dart 3.11 lower bounds.
+- Validate Android consumer configurations and both Apple dependency managers in
+  CI; document supported iOS destinations separately from experimental URLs.
+
 ## 0.5.1
 
 ### 🔧 Bug Fixes

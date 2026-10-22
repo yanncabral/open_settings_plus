@@ -4,6 +4,11 @@ part of 'open_settings_plus.dart';
 /// The iOS implementation of `OpenSettingsPlusPlatform`. You
 /// can use this class to open settings in iOS.
 /// Note: This class should only be used in iOS.
+///
+/// Prefer [currentAppSettings] and [appNotification], which use public system
+/// destinations. Other shortcuts use experimental `App-prefs:` URLs. Their
+/// availability and destination depend on the iOS version; a successful launch
+/// does not guarantee that the requested settings section was displayed.
 /// {@endtemplate}
 class OpenSettingsPlusIOS extends OpenSettingsPlus {
   /// {@macro open_settings_plus_ios}
@@ -25,10 +30,23 @@ class OpenSettingsPlusIOS extends OpenSettingsPlus {
     return sendCustomMessage('App-prefs:');
   }
 
-  /// Open the app settings.
-  /// returns operation successful or failure.
-  Future<bool> appSettings() {
+  /// Open the current app's settings; alias for [currentAppSettings].
+  @Deprecated('Use currentAppSettings() for an explicit cross-platform name.')
+  Future<bool> appSettings() => currentAppSettings();
+
+  /// Open the current app's settings using the public iOS destination.
+  ///
+  /// A true result confirms a launch request, never a permission change.
+  Future<bool> currentAppSettings() {
     return sendCustomMessage('app-settings:');
+  }
+
+  /// Open the current app's notification settings on iOS 15.4 or later.
+  ///
+  /// Older versions fall back to the app's settings. A true result can include
+  /// that fallback; use the detailed API when the distinction matters.
+  Future<bool> appNotification() {
+    return sendCustomMessage('app-notification-settings:');
   }
 
   /// Open iOS settings in `About` section.
