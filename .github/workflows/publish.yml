@@ -58,3 +58,81 @@ jobs:
       - name: 🚀 Publish
         if: startsWith(github.ref, 'refs/tags/v')
         run: dart pub publish --force
+
+  # Android build coverage for the three combinations this plugin has to support: the legacy
+  # Kotlin Gradle Plugin path (AGP 8), AGP 9 with built-in Kotlin, and AGP 9 with a consumer
+  # that opts out of it. The example is committed in the AGP 8 shape; each matrix entry patches
+  # it, so one example serves all three.
+  validate-android:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Gradle 8.14.3 / KGP 2.2.20 rather than the example's committed 8.13 / 2.2.10: the
+          # Flutter Gradle plugin enforces minimums of Gradle 8.14.0 and KGP 2.2.20, so the
+          # example does not build with current stable Flutter as-is. KGP 2.2.20 is therefore
+          # also the oldest Kotlin this path can be validated against on stable Flutter — the
+          # library's declared 1.8.20 cannot be exercised by CI at all.
+          - name: AGP 8 (Kotlin Gradle Plugin)
+            agp: '8.13.2'
+            kgp: '2.2.20'
+            gradle: '8.14.3'
+            built_in_kotlin: ''
+          - name: AGP 9 (built-in Kotlin)
+            agp: '9.1.1'
+            kgp: '2.4.20'
+            gradle: '9.3.1'
+            built_in_kotlin: 'true'
+          - name: AGP 9 (built-in Kotlin disabled)
+            agp: '9.1.1'
+            kgp: '2.4.20'
+            gradle: '9.3.1'
+            built_in_kotlin: 'false'
+    name: 🤖 ${{ matrix.name }}
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: 🔧 Configure the example for this AGP/KGP combination
+        working-directory: example/android
+        run: |
+          set -eux
+          sed -i -E "s|(id \"com.android.application\") version \"[^\"]+\"|\1 version \"${{ matrix.agp }}\"|" settings.gradle
+          sed -i -E "s|(id \"org.jetbrains.kotlin.android\") version \"[^\"]+\"|\1 version \"${{ matrix.kgp }}\"|" settings.gradle
+          sed -i -E "s|gradle-[0-9.]+-all\.zip|gradle-${{ matrix.gradle }}-all.zip|" gradle/wrapper/gradle-wrapper.properties
+          if [ -n "${{ matrix.built_in_kotlin }}" ]; then
+            # Flutter's own Gradle plugin still uses the legacy variant API, so the new DSL has
+            # to stay off on AGP 9 regardless of the built-in Kotlin setting.
+            printf 'android.newDsl=false\nandroid.builtInKotlin=%s\n' '${{ matrix.built_in_kotlin }}' >> gradle.properties
+          fi
+          if [ "${{ matrix.built_in_kotlin }}" = "true" ]; then
+            # The Kotlin Gradle Plugin refuses to apply when built-in Kotlin is on, so a consumer
+            # app must not apply it either — mirror that migration in the example: drop the
+            # plugin and its kotlinOptions block (jvmTarget then inherits compileOptions'
+            # targetCompatibility, 11 here, exactly as in the library).
+            sed -i '/id "kotlin-android"/d' app/build.gradle
+            sed -i '/^    kotlinOptions {$/,/^    }$/d' app/build.gradle
+          fi
+          tail -n 5 gradle.properties
+          grep -nE "com.android.application|kotlin.android" settings.gradle
+
+      - name: 📦 Install Dependencies
+        working-directory: example
+        run: flutter pub get
+
+      - name: 🤖 Build the Android example
+        working-directory: example
+        run: flutter build apk --debug
